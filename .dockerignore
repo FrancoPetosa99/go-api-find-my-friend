@@ -1,0 +1,62 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+docs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment files (except example)
+.env
+.env.local
+.env.production
+
+# Build artifacts
+bin/
+dist/
+build/
+
+# Test files
+*_test.go
+test/
+tests/
+
+# Coverage
+coverage.txt
+coverage.out
+
+# Temporary files
+tmp/
+temp/
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Dependencies (will be downloaded during build)
+vendor/
+
+# Database files
+*.db
+*.sqlite
+
+# Uploads
+uploads/ 
