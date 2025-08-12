@@ -36,7 +36,7 @@ WORKDIR /app
 COPY --from=builder /app/main .
 
 # Copiar archivos de configuración
-COPY --from=builder /app/env.example ./env.example
+# COPY --from=builder /app/env.example ./env.example
 
 # Cambiar propiedad de archivos
 RUN chown -R appuser:appgroup /app
