@@ -23,10 +23,8 @@ Thumbs.db
 *.log
 logs/
 
-# Environment files (except example)
-.env
-.env.local
-.env.production
+# Environment files
+env.example
 
 # Build artifacts
 bin/

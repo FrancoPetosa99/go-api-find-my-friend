@@ -47,24 +47,5 @@ USER appuser
 # Exponer puerto
 EXPOSE 8080
 
-# Variables de entorno por defecto
-ENV ENVIRONMENT=production
-ENV SERVER_PORT=8080
-ENV SERVER_HOST=0.0.0.0
-
-ENV DB_HOST=find-my-friend-db.database.windows.net
-ENV DB_PORT=1433
-ENV DB_NAME=find-my-friend
-ENV DB_USER=db_admin
-ENV DB_PASSWORD=Isabella1506*
-ENV B_SSL_MODE=disable
-
-ENV JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
-ENV JWT_EXPIRATION_HOURS=24
-
-ENV CLOUDINARY_CLOUD_NAME=dw9e57leg
-ENV CLOUDINARY_API_KEY=253523817534744
-ENV CLOUDINARY_API_SECRET=2K5NwA4y4vKtUdKaXKV1uZjtCr0
-
 # Comando para ejecutar la aplicación
 CMD ["./main"] 
