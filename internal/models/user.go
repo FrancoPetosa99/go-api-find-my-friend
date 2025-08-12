@@ -9,7 +9,7 @@ type User struct {
 	Name      string     `json:"name" gorm:"not null"`
 	LastName  string     `json:"last_name" gorm:"not null"`
 	Email     string     `json:"email" gorm:"unique;not null"`
-	Password  string     `json:"-" gorm:"not null"` // "-" oculta el campo en JSON
+	Password  string     `json:"-" gorm:"not null"`
 	Phone     string     `json:"phone"`
 	Pets      []Pet      `json:"pets,omitempty" gorm:"foreignKey:UserID;constraint:OnDelete:CASCADE"`
 	CreatedAt time.Time  `json:"created_at"`
