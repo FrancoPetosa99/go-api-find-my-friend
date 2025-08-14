@@ -22,16 +22,14 @@ func Connect(config *config.Config) {
 		log.Fatal("Failed to connect to database. \n", err)
 	}
 
-	dbName := config.Database.Name
-	createDB(dbName)
-
 	DB = db
 	log.Println("Database connected successfully")
 }
 
-func createDB(dbName string) {
+func CreateDB(config *config.Config) {
+	dbName := config.Database.Name
 	query := fmt.Sprintf("IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'%s') CREATE DATABASE [%s];", dbName, dbName)
-	_, err := db.Exec(query)
+	_, err := DB.Exec(query)
 	if err != nil {
 		log.Fatal("Failed to create database: ", err)
 	}
