@@ -3,6 +3,7 @@ package database
 import (
 	"log"
 	"fmt"
+	"errors"
 	"go-api-find-my-friend/internal/models"
 	"go-api-find-my-friend/pkg/config"
 
@@ -19,12 +20,12 @@ func Connect(config *config.Config) {
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 
-	dbName := config.Database.Name
-	createDB(dbName)
-
 	if err != nil {
 		log.Fatal("Failed to connect to database. \n", err)
 	}
+
+	dbName := config.Database.Name
+	createDB(dbName)
 
 	DB = db
 	log.Println("Database connected successfully")
