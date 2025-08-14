@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"go-api-find-my-friend/internal/models"
 	"go-api-find-my-friend/pkg/config"
-	"db/sql"
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
