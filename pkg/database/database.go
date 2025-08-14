@@ -13,14 +13,14 @@ import (
 
 var DB *gorm.DB
 
-func Connect(config *config.Config) {
-	createDB(config)
-	
+func Connect(config *config.Config) {	
 	dsn := config.GetDSN()
-
 	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
+
+	dbName := config.Database.Name
+	createDB(dbName)
 
 	if err != nil {
 		log.Fatal("Failed to connect to database. \n", err)
@@ -30,19 +30,8 @@ func Connect(config *config.Config) {
 	log.Println("Database connected successfully")
 }
 
-func createDB(cfg *config.Config) {
-	connString := fmt.Sprintf(
-		"sqlserver://%s:%s@%s:%s",
-		cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort,
-	)
-
-	db, err := sql.Open("sqlserver", connString)
-	if err != nil {
-		log.Fatal("Failed to connect to SQL Server: ", err)
-	}
-	defer db.Close()
-
-	query := fmt.Sprintf("IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'%s') CREATE DATABASE [%s];", cfg.DBName, cfg.DBName)
+func createDB(dbName string) {
+	query := fmt.Sprintf("IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'%s') CREATE DATABASE [%s];", dbName, dbName)
 	_, err = db.Exec(query)
 	if err != nil {
 		log.Fatal("Failed to create database: ", err)
