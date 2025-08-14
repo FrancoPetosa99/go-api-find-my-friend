@@ -29,7 +29,7 @@ func Connect(config *config.Config) {
 func CreateDB(config *config.Config) {
 	dbName := config.Database.Name
 	query := fmt.Sprintf("IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'%s') CREATE DATABASE [%s];", dbName, dbName)
-	_, err := DB.Exec(query)
+	err := DB.Exec(query)
 	if err != nil {
 		log.Fatal("Failed to create database: ", err)
 	}
