@@ -87,11 +87,8 @@ var (
 	ConfigInstance *Config
 )
 
-// LoadConfig carga la configuración desde variables de entorno
 func LoadConfig() (*Config, error) {
-	// Cargar archivo .env si existe
 	if err := godotenv.Load(); err != nil {
-		// No es un error si el archivo no existe
 		fmt.Println("No .env file found, using system environment variables")
 	}
 
@@ -106,11 +103,11 @@ func LoadConfig() (*Config, error) {
 			Environment: getEnv("ENVIRONMENT", "development"),
 		},
 		Database: DatabaseConfig{
-			Host:     getEnv("DB_HOST", "localhost"),
-			Port:     getEnv("DB_PORT", "1433"),
-			Name:     getEnv("DB_NAME", "find_my_friend_db"),
-			User:     getEnv("DB_USER", "sa"),
-			Password: getEnv("DB_PASSWORD", "password"),
+			Host:     getEnv("DB_HOST", ""),
+			Port:     getEnv("DB_PORT", ""),
+			Name:     getEnv("DB_NAME", ""),
+			User:     getEnv("DB_USER", ""),
+			Password: getEnv("DB_PASSWORD", ""),
 			SSLMode:  getEnv("DB_SSL_MODE", "disable"),
 		},
 		JWT: JWTConfig{
@@ -157,6 +154,7 @@ func LoadConfig() (*Config, error) {
 
 // getEnv obtiene una variable de entorno con valor por defecto
 func getEnv(key, defaultValue string) string {
+	fmt.Println("%s: %s", key, os.Getenv(key))
 	if value := os.Getenv(key); value != "" {
 		return value
 	}
