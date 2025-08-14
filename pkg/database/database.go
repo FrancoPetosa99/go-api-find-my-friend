@@ -2,7 +2,7 @@ package database
 
 import (
 	"log"
-
+	"fmt"
 	"go-api-find-my-friend/internal/models"
 	"go-api-find-my-friend/pkg/config"
 
