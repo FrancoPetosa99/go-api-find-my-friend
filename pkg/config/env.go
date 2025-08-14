@@ -10,7 +10,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// Config estructura para almacenar la configuración
 type Config struct {
 	Server     ServerConfig
 	Database   DatabaseConfig
@@ -152,16 +151,13 @@ func LoadConfig() (*Config, error) {
 	return config, nil
 }
 
-// getEnv obtiene una variable de entorno con valor por defecto
 func getEnv(key, defaultValue string) string {
-	fmt.Println("%s: %s", key, os.Getenv(key))
 	if value := os.Getenv(key); value != "" {
 		return value
 	}
 	return defaultValue
 }
 
-// getEnvAsInt obtiene una variable de entorno como entero
 func getEnvAsInt(key string, defaultValue int) int {
 	if value := os.Getenv(key); value != "" {
 		if intValue, err := strconv.Atoi(value); err == nil {
@@ -171,7 +167,6 @@ func getEnvAsInt(key string, defaultValue int) int {
 	return defaultValue
 }
 
-// getEnvAsSlice obtiene una variable de entorno como slice de strings
 func getEnvAsSlice(key string, defaultValue []string) []string {
 	if value := os.Getenv(key); value != "" {
 		return strings.Split(value, ",")
@@ -179,7 +174,6 @@ func getEnvAsSlice(key string, defaultValue []string) []string {
 	return defaultValue
 }
 
-// getEnvAsDuration obtiene una variable de entorno como duración
 func getEnvAsDuration(key string, defaultValue time.Duration) time.Duration {
 	if value := os.Getenv(key); value != "" {
 		if duration, err := time.ParseDuration(value); err == nil {
@@ -189,7 +183,6 @@ func getEnvAsDuration(key string, defaultValue time.Duration) time.Duration {
 	return defaultValue
 }
 
-// GetDSN retorna la cadena de conexión para la base de datos
 func (c *Config) GetDSN() string {
 	return fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
 		c.Database.User,
@@ -200,12 +193,10 @@ func (c *Config) GetDSN() string {
 	)
 }
 
-// IsDevelopment retorna true si el entorno es development
 func (c *Config) IsDevelopment() bool {
 	return c.Server.Environment == "development"
 }
 
-// IsProduction retorna true si el entorno es production
 func (c *Config) IsProduction() bool {
 	return c.Server.Environment == "production"
 }
