@@ -27,7 +27,7 @@ func Connect(config *config.Config) {
 }
 
 func CreateDB(config *config.Config) {
-	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=master",
+	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=master&encrypt=disable",
 		config.Database.User,
 		config.Database.Password,
 		config.Database.Host,
@@ -58,7 +58,7 @@ func AutoMigrate() {
 }
 
 func getDSN(db config.DatabaseConfig) string {
-	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
+	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s&encrypt=disable",
 		db.User,     
 		db.Password,
 		db.Host,
