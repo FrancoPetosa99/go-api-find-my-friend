@@ -47,5 +47,9 @@ USER appuser
 # Exponer puerto
 EXPOSE 8080
 
+# Copiar wait-for-it al contenedor
+COPY wait-for-it.sh /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
+
 # Comando para ejecutar la aplicación
-CMD ["./main"] 
+CMD ["/app/wait-for-it.sh", "sqlserver:1433", "--timeout=60", "--strict", "--", "./main"]
