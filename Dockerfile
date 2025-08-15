@@ -22,7 +22,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server
 # Production stage
 FROM alpine:latest
 
-# Instalar ca-certificates para HTTPS
+# Instalar ca-certificates y bash
 RUN apk --no-cache add ca-certificates tzdata bash curl
 
 # Crear usuario no-root
