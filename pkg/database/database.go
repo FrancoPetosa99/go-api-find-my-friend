@@ -27,9 +27,21 @@ func Connect(config *config.Config) {
 }
 
 func CreateDB(config *config.Config) {
+	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=master",
+		config.Database.User,
+		config.Database.Password,
+		config.Database.Host,
+		config.Database.Port,
+	)
+
+	dbMaster, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatal("Failed to connect to master database: ", err)
+	}
+	
 	dbName := config.Database.Name
 	query := fmt.Sprintf("IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'%s') CREATE DATABASE [%s];", dbName, dbName)
-	err := DB.Exec(query)
+	err := dbMaster.Exec(query)
 	if err != nil {
 		log.Fatal("Failed to create database: ", err)
 	}
