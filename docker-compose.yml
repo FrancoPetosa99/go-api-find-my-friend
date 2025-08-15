@@ -1,39 +1,37 @@
 version: "3.9"
 
 services:
-  mysql:
-    image: mysql:8.1
-    container_name: mysql_container
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_container
     ports:
-      - "3306:3306"
+      - "1433:1433"
     environment:
-      MYSQL_ROOT_PASSWORD: "Password123*"
-      MYSQL_DATABASE: "find_my_friend"
-      MYSQL_USER: "appuser"
-      MYSQL_PASSWORD: "Password123*"
+      SA_PASSWORD: "Password123*"
+      ACCEPT_EULA: "Y"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - sqlserver_data:/var/opt/mssql
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "appuser", "-pPassword123*"]
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "127.0.0.1", "-U", "sa", "-P", "Password123*", "-Q", "SELECT 1"]
       interval: 10s
       retries: 10
-      start_period: 30s
+      start_period: 60s
 
   go-api-find-my-friend:
     build: .
     container_name: backend_container
     depends_on:
-      mysql:
+      sqlserver:
         condition: service_healthy
     environment:
       ENVIRONMENT: production
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_USER: appuser
+      DB_HOST: sqlserver
+      DB_PORT: 1433
+      DB_USER: sa
       DB_PASSWORD: "Password123*"
-      DB_NAME: find_my_friend
+      DB_NAME: find-my-friend
       CLOUDINARY_CLOUD_NAME: "dw9e57leg"
       CLOUDINARY_API_KEY: "253523817534744"
       CLOUDINARY_API_SECRET: "2K5NwA4y4vKtUdKaXKV1uZjtCr0x"
@@ -63,4 +61,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  mysql_data:
+  sqlserver_data:
