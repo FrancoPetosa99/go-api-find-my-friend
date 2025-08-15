@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
     
   go-api-find-my-friend:
-    build: .
+    image: go-api-find-my-friend
     container_name: backend_container
     depends_on:
       - sqlserver
