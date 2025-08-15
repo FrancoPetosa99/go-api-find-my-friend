@@ -183,16 +183,6 @@ func getEnvAsDuration(key string, defaultValue time.Duration) time.Duration {
 	return defaultValue
 }
 
-func (c *Config) GetDSN() string {
-	return fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
-		c.Database.User,
-		c.Database.Password,
-		c.Database.Host,
-		c.Database.Port,
-		c.Database.Name,
-	)
-}
-
 func (c *Config) IsDevelopment() bool {
 	return c.Server.Environment == "development"
 }
