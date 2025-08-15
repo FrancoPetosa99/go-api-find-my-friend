@@ -62,6 +62,7 @@ func getDSN(db config.DatabaseConfig) string {
 		db.User,     
 		db.Password,
 		db.Host,
+		db.Port,
 		db.Name,
 	)
 	return dsn
