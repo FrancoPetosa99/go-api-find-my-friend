@@ -1,12 +1,10 @@
 package database
 
 import (
-	"fmt"
 	"log"
-
+	"fmt"
 	"go-api-find-my-friend/internal/models"
 	"go-api-find-my-friend/pkg/config"
-
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -14,16 +12,9 @@ import (
 
 var DB *gorm.DB
 
-func Connect(config *config.Config) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&multiStatements=true",
-		config.Database.User,
-		config.Database.Password,
-		config.Database.Host,
-		config.Database.Port,
-		config.Database.Name,
-	)
-
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+func Connect(config *config.Config) {	
+	dsn := config.GetDSN()
+	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 
@@ -37,21 +28,9 @@ func Connect(config *config.Config) {
 
 func CreateDB(config *config.Config) {
 	dbName := config.Database.Name
-
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/mysql?parseTime=true",
-		config.Database.User,
-		config.Database.Password,
-		config.Database.Host,
-		config.Database.Port,
-	)
-
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	query := fmt.Sprintf("IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'%s') CREATE DATABASE [%s];", dbName, dbName)
+	err := DB.Exec(query)
 	if err != nil {
-		log.Fatal("Failed to connect to MySQL for creating database: ", err)
-	}
-
-	createQuery := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;", dbName)
-	if err := db.Exec(createQuery).Error; err != nil {
 		log.Fatal("Failed to create database: ", err)
 	}
 
@@ -59,7 +38,8 @@ func CreateDB(config *config.Config) {
 }
 
 func AutoMigrate() {
-	if err := DB.AutoMigrate(&models.User{}, &models.Pet{}); err != nil {
+	err := DB.AutoMigrate(&models.User{}, &models.Pet{})
+	if err != nil {
 		log.Fatal("Failed to migrate database. \n", err)
 	}
 	log.Println("Database migrated successfully")
