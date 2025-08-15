@@ -14,18 +14,12 @@ services:
       - sqlserver_data:/var/opt/mssql
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "127.0.0.1", "-U", "sa", "-P", "Password123*", "-Q", "SELECT 1"]
-      interval: 10s
-      retries: 10
-      start_period: 60s
-
+    
   go-api-find-my-friend:
     build: .
     container_name: backend_container
     depends_on:
-      sqlserver:
-        condition: service_healthy
+      - sqlserver
     environment:
       ENVIRONMENT: production
       DB_HOST: sqlserver
