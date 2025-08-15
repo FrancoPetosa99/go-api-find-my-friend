@@ -49,4 +49,4 @@ USER appuser
 EXPOSE 8080
 
 # CMD modificado para esperar a SQL Server
-CMD ["/app/wait-for-it.sh", "sqlserver:1433", "--timeout=120", "--strict", "--", "./main"]
+CMD ["/app/wait-for-it.sh", "sqlserver:1433", "--timeout=200", "--strict", "--", "./main"]
