@@ -49,4 +49,4 @@ USER appuser
 EXPOSE 8080
 
 # CMD modificado para esperar a MySQL
-CMD ["/app/wait-for-it.sh", "mysql:3306", "--timeout=60", "--strict", "--", "./main"]
+CMD ["/app/wait-for-it.sh", "mysql:3306", "--timeout=120", "--strict", "--", "./main"]
