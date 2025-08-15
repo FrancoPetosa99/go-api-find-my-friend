@@ -43,6 +43,7 @@ services:
     image: nginx:latest
     container_name: nginx_container
     depends_on:
+      - sqlserver
       - react-find-my-friend
       - go-api-find-my-friend
     ports:
