@@ -19,8 +19,8 @@ func main() {
 
 	if config.IsProduction() {
 		log.Printf("🚀 Running in PRODUCTION mode")
-		database.Connect(config)
 		database.CreateDB(config)
+		database.Connect(config)
 		database.AutoMigrate()
 	} else {
 		log.Printf("🔧 Running in DEVELOPMENT mode")
