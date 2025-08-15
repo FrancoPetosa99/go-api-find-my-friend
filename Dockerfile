@@ -35,8 +35,9 @@ WORKDIR /app
 # Copiar el binario desde el stage de build
 COPY --from=builder /app/main .
 
-# Copiar archivos de configuración
-# COPY --from=builder /app/env.example ./env.example
+# Copiar wait-for-it al contenedor
+COPY wait-for-it.sh /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
 
 # Cambiar propiedad de archivos
 RUN chown -R appuser:appgroup /app
@@ -46,10 +47,6 @@ USER appuser
 
 # Exponer puerto
 EXPOSE 8080
-
-# Copiar wait-for-it al contenedor
-COPY wait-for-it.sh /app/wait-for-it.sh
-RUN chmod +x /app/wait-for-it.sh
 
 # Comando para ejecutar la aplicación
 CMD ["/app/wait-for-it.sh", "sqlserver:1433", "--timeout=60", "--strict", "--", "./main"]
