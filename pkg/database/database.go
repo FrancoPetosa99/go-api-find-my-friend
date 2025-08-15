@@ -41,9 +41,9 @@ func CreateDB(config *config.Config) {
 	
 	dbName := config.Database.Name
 	query := fmt.Sprintf("IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'%s') CREATE DATABASE [%s];", dbName, dbName)
-	err = dbMaster.Exec(query)
-	if err != nil {
-		log.Fatal("Failed to create database: ", err)
+	
+	if exec := dbMaster.Exec(query); exec.Error != nil {
+		log.Fatal("Failed to create database: ", exec.Error)
 	}
 
 	log.Println("Database exists or created successfully")
