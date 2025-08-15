@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -8,15 +10,16 @@ services:
       SA_PASSWORD: "Password123*"
       ACCEPT_EULA: "Y"
     volumes:
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
       - sqlserver_data:/var/opt/mssql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     restart: unless-stopped
 
   go-api-find-my-friend:
-    image: go-api-find-my-friend:latest
+    build: .
     container_name: backend_container
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     environment:
       ENVIRONMENT: production
       DB_HOST: sqlserver
@@ -44,7 +47,6 @@ services:
     image: nginx:latest
     container_name: nginx_container
     depends_on:
-      - sqlserver
       - react-find-my-friend
       - go-api-find-my-friend
     ports:
