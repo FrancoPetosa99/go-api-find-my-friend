@@ -52,4 +52,5 @@ func getDSN() string {
 		config.Database.Host,
 		config.Database.Name,
 	)
+	return dsn
 }
