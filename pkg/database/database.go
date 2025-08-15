@@ -13,7 +13,7 @@ import (
 var DB *gorm.DB
 
 func Connect(config *config.Config) {	
-	dsn := config.GetDSN()
+	dsn := getDSN()
 	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
@@ -43,4 +43,13 @@ func AutoMigrate() {
 		log.Fatal("Failed to migrate database. \n", err)
 	}
 	log.Println("Database migrated successfully")
+}
+
+func getDSN() string {
+	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s",
+		config.Database.User,     
+		config.Database.Password,
+		config.Database.Host,
+		config.Database.Name,
+	)
 }
