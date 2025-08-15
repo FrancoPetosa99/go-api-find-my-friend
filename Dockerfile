@@ -22,7 +22,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server
 # Production stage
 FROM alpine:latest
 
-# Instalar ca-certificates y bash
+# Instalar ca-certificates, bash y curl
 RUN apk --no-cache add ca-certificates tzdata bash curl
 
 # Crear usuario no-root
@@ -48,5 +48,5 @@ USER appuser
 # Exponer puerto
 EXPOSE 8080
 
-# CMD modificado para esperar a SQL Server
-CMD ["/app/wait-for-it.sh", "sqlserver:1433", "--timeout=60", "--strict", "--", "./main"]
+# CMD modificado para esperar a MySQL
+CMD ["/app/wait-for-it.sh", "mysql:3306", "--timeout=60", "--strict", "--", "./main"]
