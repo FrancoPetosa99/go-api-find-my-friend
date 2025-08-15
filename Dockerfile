@@ -23,7 +23,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server
 FROM alpine:latest
 
 # Instalar ca-certificates para HTTPS
-RUN apk --no-cache add ca-certificates tzdata
+RUN apk --no-cache add ca-certificates tzdata bash curl
 
 # Crear usuario no-root
 RUN addgroup -g 1001 -S appgroup && \
@@ -35,7 +35,7 @@ WORKDIR /app
 # Copiar el binario desde el stage de build
 COPY --from=builder /app/main .
 
-# Copiar wait-for-it al contenedor
+# Copiar wait-for-it.sh
 COPY wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
 
@@ -48,5 +48,5 @@ USER appuser
 # Exponer puerto
 EXPOSE 8080
 
-# Comando para ejecutar la aplicación
+# CMD modificado para esperar a SQL Server
 CMD ["/app/wait-for-it.sh", "sqlserver:1433", "--timeout=60", "--strict", "--", "./main"]
