@@ -28,7 +28,7 @@ services:
       DB_NAME: find-my-friend
       CLOUDINARY_CLOUD_NAME: "dw9e57leg"
       CLOUDINARY_API_KEY: "253523817534744"
-      CLOUDINARY_API_SECRET: "2K5NwA4y4vKtUdKaXKV1uZjtCr0x"
+      CLOUDINARY_API_SECRET: "2K5NwA4y4vKtUdKaXKV1uZjtCr0"
     ports:
       - "8080:8080"
     restart: unless-stopped
