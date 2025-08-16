@@ -7,8 +7,8 @@ services:
     ports:
       - "1433:1433"
     environment:
-      SA_PASSWORD: "Password123*"
-      MSSQL_SA_PASSWORD: "Password123*"
+      SA_PASSWORD: PASSWORD
+      MSSQL_SA_PASSWORD: PASSWORD
       ACCEPT_EULA: "Y"
     volumes:
       - sqlserver_data:/var/opt/mssql
@@ -20,15 +20,15 @@ services:
     depends_on:
       - sqlserver
     environment:
-      ENVIRONMENT: production
+      ENVIRONMENT: ENVIRONMENT
       DB_HOST: sqlserver
       DB_PORT: 1433
       DB_USER: sa
-      DB_PASSWORD: "Password123*"
+      DB_PASSWORD: PASSWORD
       DB_NAME: find-my-friend
-      CLOUDINARY_CLOUD_NAME: "dw9e57leg"
-      CLOUDINARY_API_KEY: "253523817534744"
-      CLOUDINARY_API_SECRET: "2K5NwA4y4vKtUdKaXKV1uZjtCr0"
+      CLOUDINARY_CLOUD_NAME: CLOUD_NAME
+      CLOUDINARY_API_KEY: API_KEY
+      CLOUDINARY_API_SECRET: API_SECRET
     ports:
       - "8080:8080"
     restart: unless-stopped
