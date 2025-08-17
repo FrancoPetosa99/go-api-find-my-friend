@@ -1,4 +1,4 @@
-# Find My Friend - API REST
+# 🐾 Find My Friend - API REST
 
 | <h1>UTN-FRLP</h1> | <img src="./logo.png" alt="Logo del Proyecto" width="100"> |
 |-------------------|----------------------------------|
