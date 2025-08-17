@@ -1,10 +1,16 @@
-# Go API - Find My Friend
+# Find My Friend - API REST
 
-API REST desarrollada en Go con arquitectura por capas.
+| <h1>UTN-FRLP</h1> | <img src="./logo.png" alt="Logo del Proyecto" width="100"> |
+|-------------------|----------------------------------|
+
+Proyecto **Find My Friend** desarrollado para la materia Administración de Sistemas de Información de la carrera Ingeniería en Sistema de Información de la Universidad Tecnológica Nacional - Regional La Plata
+
+## Descripción
+Find my friend es una aplicación pensada para que los usuarios publiquen mascotas perdidas y ayuden a encontrar a sus dueños contactandolos a través de la plataforma.
 
 ## Arquitectura
 
-Este proyecto sigue una arquitectura por capas bien definida:
+Este proyecto describe una arquitectura por capas:
 
 ```
 ┌─────────────────┐
@@ -47,7 +53,7 @@ Este proyecto sigue una arquitectura por capas bien definida:
 - **Go 1.21+**
 - **Gin**: Framework web para routing
 - **GORM**: ORM para base de datos
-- **PostgreSQL**: Base de datos
+- **SQL Server**: Base de datos
 - **godotenv**: Manejo de variables de entorno
 
 ## Instalación
@@ -62,12 +68,12 @@ Este proyecto sigue una arquitectura por capas bien definida:
 Crear un archivo `.env` con:
 
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=password
-DB_NAME=find_my_friend
-SERVER_PORT=8080
+DB_HOST=HOST
+DB_PORT=PORT
+DB_USER=USER_NAME
+DB_PASSWORD=PASSWORD
+DB_NAME=find-my-friend
+SERVER_PORT=PORT
 ```
 
 ## Endpoints de la API
@@ -95,28 +101,3 @@ SERVER_PORT=8080
 - `size`: Tamaño de página (default: 10, max: 100)
 - `sort`: Ordenamiento (name, -name, type, -type, created_at, -created_at)
 - `q`: Término de búsqueda para mascotas
-
-### Ejemplos de Uso
-
-#### Crear una mascota perdida:
-```json
-POST /api/v1/pets
-{
-  "name": "Luna",
-  "type": "dog",
-  "breed": "Golden Retriever",
-  "user_id": "uuid-del-usuario",
-  "last_seen": {
-    "time": "2024-01-15T10:30:00Z",
-    "place": "Parque Central, Calle 123"
-  }
-}
-```
-
-#### Marcar mascota como encontrada:
-```json
-PUT /api/v1/pets/found
-{
-  "pet_id": "uuid-de-la-mascota"
-}
-``` 
